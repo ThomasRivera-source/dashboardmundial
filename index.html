@@ -17,7 +17,6 @@
   --muted:    rgba(255,255,255,0.38);
   --muted2:   rgba(255,255,255,0.55);
   --gold:     #F5C842;
-  --gold2:    #FFE08A;
   --gold-bg:  rgba(245,200,66,0.10);
   --gold-brd: rgba(245,200,66,0.25);
   --silver:   #C8D0DC;
@@ -32,12 +31,13 @@
   --red-bg:   rgba(255,96,96,0.10);
   --blue:     #5BB8FF;
   --blue-bg:  rgba(91,184,255,0.10);
+  --live:     #FF4444;
+  --live-bg:  rgba(255,68,68,0.12);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;overflow:hidden;}
 body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;display:flex;flex-direction:column;}
 
-/* HEADER */
 .hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border);flex-shrink:0;}
 .hdr-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:24px;letter-spacing:.05em;text-transform:uppercase;}
 .hdr-title em{color:var(--gold);font-style:normal;}
@@ -45,35 +45,31 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;disp
 .live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block;margin-right:5px;animation:blink 2s infinite;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 
-/* MAIN GRID */
-.main{display:grid;grid-template-columns:1fr 1fr 300px;grid-template-rows:auto 1fr;gap:0;flex:1;overflow:hidden;}
-
-/* PANELS */
+.main{display:grid;grid-template-columns:1fr 1fr 300px;flex:1;overflow:hidden;}
 .panel{padding:18px 20px;overflow-y:auto;border-right:1px solid var(--border);}
 .panel:last-child{border-right:none;}
-.panel-top{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border);}
-.panel-top .panel{border-bottom:none;}
 
 .lbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
 
-/* PODIO TOP 3 */
-.podio{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+/* PODIO */
+.podio-wrap{padding:14px 20px 0;border-bottom:1px solid var(--border);flex-shrink:0;}
+.podio{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px;}
 .podio-card{border-radius:12px;padding:14px 16px;border:1px solid var(--border);position:relative;overflow:hidden;}
 .podio-card.p1{background:var(--gold-bg);border-color:var(--gold-brd);}
 .podio-card.p2{background:var(--silver-bg);border-color:var(--silver-brd);}
 .podio-card.p3{background:var(--bronze-bg);border-color:var(--bronze-brd);}
-.podio-medal{font-size:26px;margin-bottom:6px;}
+.podio-medal{font-size:24px;margin-bottom:4px;}
 .podio-pos{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px;}
 .podio-card.p1 .podio-pos{color:var(--gold);}
 .podio-card.p2 .podio-pos{color:var(--silver);}
 .podio-card.p3 .podio-pos{color:var(--bronze);}
-.podio-nombre{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;margin-bottom:4px;}
-.podio-pts{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;line-height:1;}
+.podio-nombre{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:800;margin-bottom:3px;}
+.podio-pts{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:900;line-height:1;}
 .podio-card.p1 .podio-pts{color:var(--gold);}
 .podio-card.p2 .podio-pts{color:var(--silver);}
 .podio-card.p3 .podio-pts{color:var(--bronze);}
 .podio-sub{font-size:11px;color:var(--muted);margin-top:3px;}
-.podio-premio{display:inline-block;margin-top:8px;font-size:10px;font-weight:600;padding:3px 9px;border-radius:20px;letter-spacing:.05em;}
+.podio-premio{display:inline-block;margin-top:7px;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;letter-spacing:.05em;}
 .podio-card.p1 .podio-premio{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-brd);}
 .podio-card.p2 .podio-premio{background:var(--silver-bg);color:var(--silver);border:1px solid var(--silver-brd);}
 .podio-card.p3 .podio-premio{background:var(--bronze-bg);color:var(--bronze);border:1px solid var(--bronze-brd);}
@@ -82,15 +78,23 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;disp
 .podio-cambio.down{color:var(--red);}
 .podio-cambio.same{color:var(--muted);}
 
-/* PROXIMO PARTIDO */
-.proximo-wrap{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
-.proximo-tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
-.proximo-nombre{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;margin-bottom:8px;}
-.proximo-info{display:flex;gap:16px;align-items:center;}
-.proximo-hora-val{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:900;color:var(--gold);line-height:1;}
-.proximo-fecha-val{font-size:12px;color:var(--muted);}
+/* PARTIDO EN VIVO */
+.match-card{border-radius:12px;padding:16px 18px;border:1px solid var(--border);background:var(--s1);margin-bottom:0;}
+.match-card.en-vivo{border-color:rgba(255,68,68,0.4);background:var(--live-bg);}
+.match-card.proximo{border-color:var(--gold-brd);background:var(--gold-bg);}
+.match-tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.match-card.en-vivo .match-tag{color:var(--live);}
+.match-card.proximo .match-tag{color:var(--gold);}
+.live-pulse{width:8px;height:8px;border-radius:50%;background:var(--live);animation:blink .8s infinite;}
+.match-nombre{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;margin-bottom:10px;}
+.match-score-wrap{display:flex;align-items:center;justify-content:space-between;}
+.match-score{font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;line-height:1;letter-spacing:.02em;}
+.match-card.en-vivo .match-score{color:var(--live);}
+.match-card.proximo .match-score{color:var(--gold);font-size:32px;}
+.match-minuto{font-size:12px;color:var(--muted);text-align:right;}
+.match-fecha{font-size:11px;color:var(--muted);}
 
-/* RANKING FULL */
+/* RANKING */
 .rank-table{width:100%;border-collapse:collapse;}
 .rank-table th{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:0 8px 8px;text-align:left;border-bottom:1px solid var(--border);}
 .rank-table th.r{text-align:right;}
@@ -108,7 +112,7 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;disp
 .rk-nombre{font-weight:500;}
 .rk-pts{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;}
 .r1 .rk-pts{color:var(--gold);}
-.rk-bar-wrap{width:70px;height:4px;background:var(--s3);border-radius:2px;display:inline-block;vertical-align:middle;margin-left:6px;}
+.rk-bar-wrap{width:60px;height:4px;background:var(--s3);border-radius:2px;display:inline-block;vertical-align:middle;margin-left:6px;}
 .rk-bar{height:4px;border-radius:2px;background:var(--muted);}
 .r1 .rk-bar{background:var(--gold);}
 .r2 .rk-bar{background:var(--silver);}
@@ -122,7 +126,6 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;disp
 .cambio-cell.same{color:var(--muted);}
 .pill{font-size:11px;font-weight:600;background:var(--s2);border:1px solid var(--border2);border-radius:20px;padding:2px 8px;white-space:nowrap;}
 
-/* DERECHA */
 .pron-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;}
 .pron-row:last-child{border-bottom:none;}
 .pron-score{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:16px;color:var(--gold);}
@@ -139,22 +142,18 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;disp
 .part-nombre{flex:1;font-weight:500;}
 .part-score{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:14px;}
 .part-score.played{color:var(--gold);}
+.part-score.live{color:var(--live);animation:blink 1.5s infinite;}
 .part-score.pending{color:var(--muted);font-size:11px;font-weight:400;}
 
-/* CHART */
-.chart-wrap{position:relative;height:140px;margin-top:4px;}
-
+.divider{height:1px;background:var(--border);margin:14px 0;}
 .loading{color:var(--muted);font-size:12px;padding:12px 0;text-align:center;}
 ::-webkit-scrollbar{width:3px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:3px;}
-
-.divider{height:1px;background:var(--border);margin:14px 0;}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="hdr">
   <div class="hdr-title">Quiniela <em>Mundial 2026</em></div>
   <div class="hdr-meta">
@@ -163,18 +162,17 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;disp
   </div>
 </div>
 
-<!-- TOP ROW: PODIO -->
-<div style="padding:16px 20px 0;border-bottom:1px solid var(--border);flex-shrink:0;">
-  <div class="lbl" style="margin-bottom:10px;">Zona de premios</div>
+<div class="podio-wrap">
+  <div class="lbl">Zona de premios</div>
   <div class="podio" id="podio"><div class="loading" style="grid-column:1/-1">Cargando...</div></div>
-  <div style="height:14px;"></div>
 </div>
 
-<!-- MAIN -->
-<div class="main" style="flex:1;overflow:hidden;">
+<div class="main">
 
-  <!-- COL 1: Ranking completo -->
-  <div class="panel" style="border-right:1px solid var(--border);">
+  <div class="panel">
+    <div class="lbl" style="margin-bottom:10px;">Partido actual</div>
+    <div id="match-card"><div class="loading">Cargando...</div></div>
+    <div class="divider"></div>
     <div class="lbl">Ranking completo</div>
     <table class="rank-table">
       <thead>
@@ -192,34 +190,21 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;disp
     </table>
   </div>
 
-  <!-- COL 2: Próximo partido + resultados -->
-  <div class="panel" style="border-right:1px solid var(--border);">
-
-    <div class="lbl">Próximo partido</div>
-    <div class="proximo-wrap" id="proximo-wrap"><div class="loading">Cargando...</div></div>
-
-    <div class="divider"></div>
-
+  <div class="panel">
     <div class="lbl">Últimos resultados</div>
     <div id="partidos-list"><div class="loading">Cargando...</div></div>
-
   </div>
 
-  <!-- COL 3: Pronósticos + stats -->
   <div class="panel">
-
-    <div class="lbl">Pronósticos próximo partido</div>
+    <div class="lbl">Pronósticos partido actual</div>
     <div id="pronosticos-list"><div class="loading">Cargando...</div></div>
-
     <div class="divider"></div>
-
     <div class="lbl">Estadísticas</div>
     <div class="stat-grid" id="stats-grid"><div class="loading" style="grid-column:1/-1">Cargando...</div></div>
-
   </div>
+
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 const SHEET_ID = '1-xxMIIzSgGiRyHAURaOZ_RGaWb89OEE9Ha0vcDr-7gw';
 const API_KEY  = 'AIzaSyAEQ7D5fCmGUwHFdFcoHYXvl7CDA5K1n3o';
@@ -229,14 +214,14 @@ function url(sheet, range) {
 }
 async function get(sheet, range) {
   const r = await fetch(url(sheet, range));
-  if (!r.ok) throw new Error(r.status + ' ' + sheet);
+  if (!r.ok) throw new Error(r.status+' '+sheet);
   return (await r.json()).values || [];
 }
 
 const PREMIOS = ['🏆 Premio mayor','🥈 Premio mediano','🎫 Recupera inversión'];
 
-function cambioClass(str) {
-  if (!str || str==='—') return 'same';
+function cc(str) {
+  if (!str||str==='—') return 'same';
   if (str.includes('▲')) return 'up';
   if (str.includes('▼')) return 'down';
   return 'same';
@@ -244,65 +229,73 @@ function cambioClass(str) {
 
 function renderPodio(rankData, statsData) {
   const el = document.getElementById('podio');
-  if (!rankData || rankData.length < 2) { el.innerHTML='<div class="loading" style="grid-column:1/-1">Sin datos</div>'; return; }
-
+  if (!rankData||rankData.length<2){el.innerHTML='<div class="loading" style="grid-column:1/-1">Sin datos</div>';return;}
   const rows = rankData.slice(1).filter(r=>r[0]).sort((a,b)=>(Number(b[1])||0)-(Number(a[1])||0));
-  const statsMap = {};
-  if (statsData) statsData.slice(1).forEach(r=>{ if(r[0]) statsMap[r[0].trim()]=r; });
-
-  const top3 = rows.slice(0,3);
-  const cls  = ['p1','p2','p3'];
-  const medals = ['🥇','🥈','🥉'];
-
-  el.innerHTML = top3.map((r,i) => {
-    const nombre  = r[0]||'—';
-    const pts     = r[1]||'0';
-    const cambio  = r[5]||'—';
-    const stats   = statsMap[nombre]||[];
-    const exactos = stats[1]||'0';
-    const result  = stats[2]||'0';
-    const cc      = cambioClass(cambio);
-    return `
-    <div class="podio-card ${cls[i]}">
-      <span class="podio-cambio ${cc}">${cambio}</span>
+  const smap = {};
+  if (statsData) statsData.slice(1).forEach(r=>{if(r[0])smap[r[0].trim()]=r;});
+  const cls=['p1','p2','p3'], medals=['🥇','🥈','🥉'];
+  el.innerHTML = rows.slice(0,3).map((r,i)=>{
+    const nombre=r[0]||'—', pts=r[1]||'0', cambio=r[5]||'—';
+    const s=smap[nombre]||[], exactos=s[1]||'0', result=s[2]||'0';
+    const c=cc(cambio);
+    return `<div class="podio-card ${cls[i]}">
+      <span class="podio-cambio ${c}">${cambio}</span>
       <div class="podio-medal">${medals[i]}</div>
       <div class="podio-pos">${i===0?'Líder':i===1?'2° lugar':'3° lugar'}</div>
       <div class="podio-nombre">${nombre}</div>
-      <div class="podio-pts">${pts} <span style="font-size:14px;font-weight:500;opacity:.5;">pts</span></div>
+      <div class="podio-pts">${pts} <span style="font-size:13px;font-weight:500;opacity:.5;">pts</span></div>
       <div class="podio-sub">${exactos} exactos · ${result} resultados</div>
       <div class="podio-premio">${PREMIOS[i]}</div>
     </div>`;
   }).join('');
 }
 
+function renderMatchCard(vivoData) {
+  const el = document.getElementById('match-card');
+  if (!vivoData||vivoData.length<2){el.innerHTML='<div class="loading">Sin datos</div>';return;}
+  const [estado,partido,col3,col4,minuto] = vivoData[1];
+
+  if (estado==='EN VIVO'||estado==='MEDIO TIEMPO') {
+    const g1=col3||'0', g2=col4||'0';
+    el.innerHTML=`<div class="match-card en-vivo">
+      <div class="match-tag"><span class="live-pulse"></span>${estado==='MEDIO TIEMPO'?'MEDIO TIEMPO':'EN VIVO'} · ${minuto||''}</div>
+      <div class="match-nombre">${partido}</div>
+      <div class="match-score-wrap">
+        <div class="match-score">${g1} — ${g2}</div>
+      </div>
+    </div>`;
+  } else if (estado==='PROXIMO') {
+    el.innerHTML=`<div class="match-card proximo">
+      <div class="match-tag">Próximo partido</div>
+      <div class="match-nombre">${partido}</div>
+      <div class="match-score-wrap">
+        <div class="match-score">${col3||'—'}</div>
+        <div class="match-minuto"><div class="match-fecha">${col4||'—'}</div></div>
+      </div>
+    </div>`;
+  } else {
+    el.innerHTML=`<div class="match-card"><div class="match-tag" style="color:var(--muted)">Sin partido activo</div></div>`;
+  }
+}
+
 function renderRanking(rankData, statsData, pronoData) {
   const tbody = document.getElementById('ranking-body');
-  if (!rankData || rankData.length < 2) { tbody.innerHTML='<tr><td colspan="7" class="loading">Sin datos</td></tr>'; return; }
-
+  if (!rankData||rankData.length<2){tbody.innerHTML='<tr><td colspan="7" class="loading">Sin datos</td></tr>';return;}
   const rows = rankData.slice(1).filter(r=>r[0]).sort((a,b)=>(Number(b[1])||0)-(Number(a[1])||0));
-  const statsMap = {};
-  if (statsData) statsData.slice(1).forEach(r=>{ if(r[0]) statsMap[r[0].trim()]=r; });
-  const pronoMap = {};
-  if (pronoData) pronoData.slice(1).forEach(r=>{ if(r[0]) pronoMap[r[0].trim()]=r[1]||'—'; });
-
-  const maxPts = Number(rows[0]?.[1]||1)||1;
-
-  const rcls = ['r1','r2','r3'];
-  tbody.innerHTML = rows.map((r,i)=>{
-    const nombre  = r[0]||'—';
-    const pts     = Number(r[1])||0;
-    const cambio  = r[5]||'—';
-    const stats   = statsMap[nombre]||[];
-    const exactos = stats[1]||'0';
-    const result  = stats[2]||'0';
-    const prono   = pronoMap[nombre]||r[2]||'—';
-    const pct     = Math.round((pts/maxPts)*100);
-    const cc      = cambioClass(cambio);
-    const rc      = i<3?rcls[i]:'';
+  const smap={};if(statsData)statsData.slice(1).forEach(r=>{if(r[0])smap[r[0].trim()]=r;});
+  const pmap={};if(pronoData)pronoData.slice(1).forEach(r=>{if(r[0])pmap[r[0].trim()]=r[1]||'—';});
+  const maxPts=Number(rows[0]?.[1]||1)||1;
+  const rcls=['r1','r2','r3'];
+  tbody.innerHTML=rows.map((r,i)=>{
+    const nombre=r[0]||'—', pts=Number(r[1])||0, cambio=r[5]||'—';
+    const s=smap[nombre]||[], exactos=s[1]||'0', result=s[2]||'0';
+    const prono=pmap[nombre]||r[2]||'—';
+    const pct=Math.round((pts/maxPts)*100);
+    const c=cc(cambio), rc=i<3?rcls[i]:'';
     return `<tr class="${rc}">
       <td class="rk-pos">${i+1}</td>
       <td class="rk-nombre">${nombre}</td>
-      <td class="r cambio-cell ${cc}">${cambio}</td>
+      <td class="r cambio-cell ${c}">${cambio}</td>
       <td class="r rk-pts">${pts}<span class="rk-bar-wrap"><span class="rk-bar" style="width:${pct}%"></span></span></td>
       <td class="r"><span class="badge bg">${exactos}</span></td>
       <td class="r"><span class="badge bb">${result}</span></td>
@@ -311,38 +304,18 @@ function renderRanking(rankData, statsData, pronoData) {
   }).join('');
 }
 
-function renderProximo(data) {
-  const el = document.getElementById('proximo-wrap');
-  if (!data || data.length < 2) { el.innerHTML='<div class="loading">Sin datos</div>'; return; }
-  const [fecha, partido, hora] = data[1];
-  el.innerHTML = `
-    <div class="proximo-tag">En juego / Próximo partido</div>
-    <div class="proximo-nombre">${partido||'—'}</div>
-    <div class="proximo-info">
-      <div>
-        <div class="proximo-hora-val">${hora||'—'}</div>
-        <div class="proximo-fecha-val">${fecha||'—'}</div>
-      </div>
-    </div>`;
-}
-
 function renderPronosticos(data) {
-  const el = document.getElementById('pronosticos-list');
-  if (!data || data.length < 2) { el.innerHTML='<div class="loading">Sin datos</div>'; return; }
-  el.innerHTML = data.slice(1).filter(r=>r[0]).map(r=>`
-    <div class="pron-row">
-      <span>${r[0]}</span>
-      <span class="pron-score">${r[1]||'—'}</span>
-    </div>`).join('');
+  const el=document.getElementById('pronosticos-list');
+  if(!data||data.length<2){el.innerHTML='<div class="loading">Sin datos</div>';return;}
+  el.innerHTML=data.slice(1).filter(r=>r[0]).map(r=>`
+    <div class="pron-row"><span>${r[0]}</span><span class="pron-score">${r[1]||'—'}</span></div>`).join('');
 }
 
 function renderStats(data) {
-  const el = document.getElementById('stats-grid');
-  if (!data || data.length < 2) { el.innerHTML='<div class="loading" style="grid-column:1/-1">Sin datos</div>'; return; }
-  const emojis = ['🎯','🔴','🌟','😴','🏆','💀','📊','😬'];
-  el.innerHTML = data.slice(1)
-    .filter(r=>r[0]&&emojis.some(e=>r[0].includes(e)))
-    .map(r=>`
+  const el=document.getElementById('stats-grid');
+  if(!data||data.length<2){el.innerHTML='<div class="loading" style="grid-column:1/-1">Sin datos</div>';return;}
+  const emojis=['🎯','🔴','🌟','😴','🏆','💀','📊','😬'];
+  el.innerHTML=data.slice(1).filter(r=>r[0]&&emojis.some(e=>r[0].includes(e))).map(r=>`
     <div class="stat-card">
       <div class="stat-lbl">${r[0]}</div>
       <div class="stat-val">${r[1]||'—'}</div>
@@ -350,50 +323,64 @@ function renderStats(data) {
     </div>`).join('');
 }
 
-function renderPartidos(data) {
-  const el = document.getElementById('partidos-list');
-  if (!data || data.length < 2) { el.innerHTML='<div class="loading">Sin datos</div>'; return; }
-  const rows    = data.slice(1).filter(r=>r[1]);
-  const jugados = rows.filter(r=>r[2]&&r[2]!==''&&r[2]!=='null').slice(-5);
-  const prox    = rows.filter(r=>!r[2]||r[2]===''||r[2]==='null').slice(0,3);
-  el.innerHTML = [...jugados,...prox].map(r=>{
-    const played = r[2]&&r[2]!==''&&r[2]!=='null';
+function renderPartidos(data, vivoData) {
+  const el=document.getElementById('partidos-list');
+  if(!data||data.length<2){el.innerHTML='<div class="loading">Sin datos</div>';return;}
+
+  // Partidos en vivo desde Partido_EnVivo
+  const enVivo=[];
+  if(vivoData&&vivoData.length>1){
+    vivoData.slice(1).forEach(r=>{
+      if(r[0]==='EN VIVO'||r[0]==='MEDIO TIEMPO') enVivo.push(r[1]);
+    });
+  }
+
+  const rows=data.slice(1).filter(r=>r[1]);
+  const jugados=rows.filter(r=>r[2]&&r[2]!==''&&r[2]!=='null').slice(-6);
+  const prox=rows.filter(r=>!r[2]||r[2]===''||r[2]==='null').slice(0,4);
+
+  el.innerHTML=[...jugados,...prox].map(r=>{
+    const played=r[2]&&r[2]!==''&&r[2]!=='null';
+    const isLive=enVivo.some(n=>n===r[1]);
+    const cls=isLive?'live':played?'played':'pending';
+    const score=isLive?'⚽ EN VIVO':played?r[2]:'vs';
     return `<div class="part-row">
       <span class="part-fecha">${r[0]||''}</span>
       <span class="part-nombre">${r[1]||''}</span>
-      <span class="part-score ${played?'played':'pending'}">${played?r[2]:'vs'}</span>
+      <span class="part-score ${cls}">${score}</span>
     </div>`;
   }).join('');
 }
 
 async function cargarDatos() {
   try {
-    const [proxData,rankData,statsDesData,statsGenData,pronData,partData] = await Promise.all([
-      get('Proximo_Partido',    'A1:C2'),
+    const [rankData,statsDesData,statsGenData,pronData,partData,vivoData] = await Promise.all([
       get('Ranking_data',       'A1:F20'),
       get('Stats_Desglose',     'A1:E20'),
       get('Stats_General',      'A1:C10'),
       get('Pronosticos_Proximo','A1:B20'),
       get('Dashboard_data',     'A1:E80'),
+      get('Partido_EnVivo',     'A1:F10'),
     ]);
 
     renderPodio(rankData, statsDesData);
+    renderMatchCard(vivoData);
     renderRanking(rankData, statsDesData, pronData);
-    renderProximo(proxData);
     renderPronosticos(pronData);
     renderStats(statsGenData);
-    renderPartidos(partData);
+    renderPartidos(partData, vivoData);
 
     document.getElementById('update-time').textContent =
       'Actualizado ' + new Date().toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'});
   } catch(e) {
     console.error(e);
-    document.getElementById('update-time').textContent = 'Error — reintentando...';
+    document.getElementById('update-time').textContent='Error — reintentando...';
   }
 }
 
 cargarDatos();
-setInterval(cargarDatos, 2*60*1000);
+// Refrescar cada 60 segundos cuando hay partido en vivo, cada 2 min si no
+setInterval(cargarDatos, 60*1000);
 </script>
 </body>
 </html>
