@@ -256,7 +256,9 @@ function renderMatchCard(vivoData) {
   const [estado,partido,col3,col4,minuto] = vivoData[1];
 
   if (estado==='EN VIVO'||estado==='MEDIO TIEMPO') {
-    const g1=col3||'0', g2=col4||'0';
+    // Asegurar que los goles sean números válidos, no fechas ni null
+    const g1 = (col3 !== null && col3 !== '' && !isNaN(Number(col3))) ? Number(col3) : '?';
+    const g2 = (col4 !== null && col4 !== '' && !isNaN(Number(col4))) ? Number(col4) : '?';
     el.innerHTML=`<div class="match-card en-vivo">
       <div class="match-tag"><span class="live-pulse"></span>${estado==='MEDIO TIEMPO'?'MEDIO TIEMPO':'EN VIVO'} · ${minuto||''}</div>
       <div class="match-nombre">${partido}</div>
@@ -265,12 +267,15 @@ function renderMatchCard(vivoData) {
       </div>
     </div>`;
   } else if (estado==='PROXIMO') {
+    // col3 = hora, col4 = fecha — mostrar solo como texto
+    const hora  = String(col3||'—');
+    const fecha = String(col4||'—');
     el.innerHTML=`<div class="match-card proximo">
       <div class="match-tag">Próximo partido</div>
       <div class="match-nombre">${partido}</div>
       <div class="match-score-wrap">
-        <div class="match-score">${col3||'—'}</div>
-        <div class="match-minuto"><div class="match-fecha">${col4||'—'}</div></div>
+        <div class="match-score">${hora}</div>
+        <div class="match-minuto"><div class="match-fecha">${fecha}</div></div>
       </div>
     </div>`;
   } else {
