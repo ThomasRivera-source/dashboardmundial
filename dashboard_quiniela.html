@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiniela Mundial 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #0A0C0F;
+    --surface:   #13161C;
+    --surface2:  #1C2028;
+    --border:    rgba(255,255,255,0.07);
+    --gold:      #F5C842;
+    --gold-dim:  rgba(245,200,66,0.12);
+    --green:     #3DDC84;
+    --green-dim: rgba(61,220,132,0.1);
+    --red:       #FF5B5B;
+    --red-dim:   rgba(255,91,91,0.1);
+    --blue:      #4EA8DE;
+    --muted:     rgba(255,255,255,0.35);
+    --text:      #F0F2F5;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Barlow', sans-serif; min-height: 100vh; }
+
+  .header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 32px 16px; border-bottom: 1px solid var(--border);
+  }
+  .header-left { display: flex; align-items: baseline; gap: 14px; }
+  .header-title {
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+    font-size: 26px; letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .header-title span { color: var(--gold); }
+  .header-sub { font-size: 12px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+  .last-update { font-size: 12px; color: var(--muted); }
+  .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--green); margin-right: 6px; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .main { display: grid; grid-template-columns: 1fr 320px; height: calc(100vh - 61px); overflow: hidden; }
+  .left  { padding: 22px 28px; overflow-y: auto; display: flex; flex-direction: column; gap: 22px; }
+  .right { border-left: 1px solid var(--border); padding: 22px 22px; overflow-y: auto; display: flex; flex-direction: column; gap: 22px; }
+
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px;
+  }
+
+  .proximo-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px 22px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .proximo-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 5px; }
+  .proximo-partido { font-family: 'Barlow Condensed', sans-serif; font-size: 21px; font-weight: 700; }
+  .proximo-hora .hora { font-family: 'Barlow Condensed', sans-serif; font-size: 30px; font-weight: 800; color: var(--gold); line-height: 1; text-align: right; }
+  .proximo-hora .fecha { font-size: 11px; color: var(--muted); margin-top: 2px; text-align: right; }
+
+  .ranking-table { width: 100%; border-collapse: collapse; }
+  .ranking-table thead th {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); padding: 0 10px 9px; text-align: left; border-bottom: 1px solid var(--border);
+  }
+  .ranking-table thead th.r { text-align: right; }
+  .ranking-table tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  .ranking-table tbody tr:last-child { border-bottom: none; }
+  .ranking-table tbody tr:hover { background: var(--surface2); }
+  .ranking-table td { padding: 10px 10px; vertical-align: middle; }
+  .ranking-table td.r { text-align: right; }
+
+  .rank-pos { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; color: var(--muted); width: 24px; }
+  .rank-1 .rank-pos { color: var(--gold); }
+  .rank-2 .rank-pos { color: #C0C0C0; }
+  .rank-3 .rank-pos { color: #CD7F32; }
+  .rank-nombre { font-size: 14px; font-weight: 500; }
+  .rank-pts { font-family: 'Barlow Condensed', sans-serif; font-size: 19px; font-weight: 700; min-width: 36px; }
+  .rank-1 .rank-pts { color: var(--gold); }
+
+  .badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 20px; min-width: 26px; text-align: center; }
+  .badge-exacto    { background: var(--green-dim); color: var(--green); }
+  .badge-resultado { background: rgba(78,168,222,0.12); color: var(--blue); }
+
+  .cambio { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; min-width: 44px; text-align: right; }
+  .cambio.up   { color: var(--green); }
+  .cambio.down { color: var(--red); }
+  .cambio.same { color: var(--muted); }
+
+  .prono-pill { font-size: 12px; font-weight: 600; background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: 2px 9px; color: var(--text); white-space: nowrap; }
+
+  .pron-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .pron-row:last-child { border-bottom: none; }
+  .pron-nombre { color: var(--text); }
+  .pron-score { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 15px; color: var(--gold); }
+
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+  .stat-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .stat-value { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; line-height: 1.2; }
+  .stat-detail { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+  .partido-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+  .partido-row:last-child { border-bottom: none; }
+  .partido-fecha { font-size: 10px; color: var(--muted); min-width: 70px; }
+  .partido-nombre { flex: 1; font-weight: 500; font-size: 12px; }
+  .partido-score { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 15px; min-width: 40px; text-align: right; }
+  .partido-score.played  { color: var(--gold); }
+  .partido-score.pending { color: var(--muted); font-size: 11px; font-weight: 400; }
+
+  .loading { color: var(--muted); font-size: 12px; padding: 16px 0; text-align: center; }
+
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="header-title">Quiniela <span>Mundial 2026</span></div>
+    <div class="header-sub">Fase de grupos</div>
+  </div>
+  <div class="last-update">
+    <span class="dot"></span>
+    <span id="update-time">Cargando...</span>
+  </div>
+</div>
+
+<div class="main">
+  <div class="left">
+    <div>
+      <div class="section-label">Próximo partido</div>
+      <div class="proximo-card" id="proximo-card"><div class="loading">Cargando...</div></div>
+    </div>
+    <div>
+      <div class="section-label">Ranking</div>
+      <table class="ranking-table">
+        <thead>
+          <tr>
+            <th style="width:24px"></th>
+            <th>Participante</th>
+            <th class="r">Cambio</th>
+            <th class="r">Pts</th>
+            <th class="r">Exactos</th>
+            <th class="r">Resultado</th>
+            <th class="r">Próximo</th>
+          </tr>
+        </thead>
+        <tbody id="ranking-body"><tr><td colspan="7" class="loading">Cargando...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="right">
+    <div>
+      <div class="section-label">Pronósticos — próximo partido</div>
+      <div id="pronosticos-list"><div class="loading">Cargando...</div></div>
+    </div>
+    <div>
+      <div class="section-label">Estadísticas</div>
+      <div class="stats-grid" id="stats-grid"><div class="loading" style="grid-column:1/-1">Cargando...</div></div>
+    </div>
+    <div>
+      <div class="section-label">Últimos resultados</div>
+      <div id="partidos-list"><div class="loading">Cargando...</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SHEET_ID = '1-xxMIIzSgGiRyHAURaOZ_RGaWb89OEE9Ha0vcDr-7gw';
+const API_KEY  = 'AIzaSyAEQ7D5fCmGUwHFdFcoHYXvl7CDA5K1n3o';
+
+function sheetUrl(sheet, range) {
+  return `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${encodeURIComponent(sheet + '!' + range)}?key=${API_KEY}`;
+}
+
+async function fetchSheet(sheet, range) {
+  const r = await fetch(sheetUrl(sheet, range));
+  if (!r.ok) throw new Error(r.status);
+  const d = await r.json();
+  return d.values || [];
+}
+
+function renderProximo(data) {
+  const el = document.getElementById('proximo-card');
+  if (!data || data.length < 2) { el.innerHTML = '<div class="loading">Sin datos</div>'; return; }
+  const [fecha, partido, hora] = data[1];
+  el.innerHTML = `
+    <div>
+      <div class="proximo-label">En juego / Siguiente</div>
+      <div class="proximo-partido">${partido || '—'}</div>
+    </div>
+    <div class="proximo-hora">
+      <div class="hora">${hora || '—'}</div>
+      <div class="fecha">${fecha || '—'}</div>
+    </div>`;
+}
+
+function renderRanking(rankData, statsData, pronoData) {
+  const tbody = document.getElementById('ranking-body');
+  if (!rankData || rankData.length < 2) { tbody.innerHTML = '<tr><td colspan="7" class="loading">Sin datos</td></tr>'; return; }
+
+  const rows = rankData.slice(1).filter(r => r[0]);
+  rows.sort((a, b) => (Number(b[1]) || 0) - (Number(a[1]) || 0));
+
+  const statsMap = {};
+  if (statsData && statsData.length > 1) statsData.slice(1).forEach(r => { if (r[0]) statsMap[r[0].trim()] = r; });
+
+  const pronoMap = {};
+  if (pronoData && pronoData.length > 1) pronoData.slice(1).forEach(r => { if (r[0]) pronoMap[r[0].trim()] = r[1] || '—'; });
+
+  tbody.innerHTML = rows.map((r, i) => {
+    const pos    = i + 1;
+    const nombre = r[0] || '—';
+    const puntos = r[1] || '0';
+    const stats  = statsMap[nombre] || [];
+    const exactos = stats[1] || '0';
+    const result  = stats[2] || '0';
+    const cambioStr = r[5] || '—';
+    const prono   = pronoMap[nombre] || r[2] || '—';
+
+    let cambioHtml = `<span class="cambio same">—</span>`;
+    if (cambioStr.includes('▲')) cambioHtml = `<span class="cambio up">${cambioStr}</span>`;
+    else if (cambioStr.includes('▼')) cambioHtml = `<span class="cambio down">${cambioStr}</span>`;
+
+    return `<tr class="${pos<=3?'rank-'+pos:''}">
+      <td class="rank-pos">${pos}</td>
+      <td class="rank-nombre">${nombre}</td>
+      <td class="r">${cambioHtml}</td>
+      <td class="r rank-pts">${puntos}</td>
+      <td class="r"><span class="badge badge-exacto">${exactos}</span></td>
+      <td class="r"><span class="badge badge-resultado">${result}</span></td>
+      <td class="r"><span class="prono-pill">${prono}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderPronosticos(data) {
+  const el = document.getElementById('pronosticos-list');
+  if (!data || data.length < 2) { el.innerHTML = '<div class="loading">Sin datos</div>'; return; }
+  el.innerHTML = data.slice(1).filter(r => r[0]).map(r => `
+    <div class="pron-row">
+      <span class="pron-nombre">${r[0]}</span>
+      <span class="pron-score">${r[1] || '—'}</span>
+    </div>`).join('');
+}
+
+function renderStats(data) {
+  const el = document.getElementById('stats-grid');
+  if (!data || data.length < 2) { el.innerHTML = '<div class="loading" style="grid-column:1/-1">Sin datos</div>'; return; }
+  const emojis = ['🎯','🔴','🌟','😴','🏆','💀','📊','😬'];
+  el.innerHTML = data.slice(1)
+    .filter(r => r[0] && emojis.some(e => r[0].includes(e)))
+    .map(r => `
+      <div class="stat-card">
+        <div class="stat-label">${r[0]}</div>
+        <div class="stat-value">${r[1] || '—'}</div>
+        <div class="stat-detail">${r[2] || ''}</div>
+      </div>`).join('');
+}
+
+function renderPartidos(data) {
+  const el = document.getElementById('partidos-list');
+  if (!data || data.length < 2) { el.innerHTML = '<div class="loading">Sin datos</div>'; return; }
+  const rows     = data.slice(1).filter(r => r[1]);
+  const jugados  = rows.filter(r => r[2] && r[2] !== '' && r[2] !== 'null').slice(-6);
+  const proximos = rows.filter(r => !r[2] || r[2] === '' || r[2] === 'null').slice(0, 3);
+  el.innerHTML = [...jugados, ...proximos].map(r => {
+    const played = r[2] && r[2] !== '' && r[2] !== 'null';
+    return `<div class="partido-row">
+      <span class="partido-fecha">${r[0] || ''}</span>
+      <span class="partido-nombre">${r[1] || ''}</span>
+      <span class="partido-score ${played ? 'played' : 'pending'}">${played ? r[2] : 'vs'}</span>
+    </div>`;
+  }).join('');
+}
+
+async function cargarDatos() {
+  try {
+    const [proxData, rankData, statsDesData, statsGenData, pronData, partData] = await Promise.all([
+      fetchSheet('Proximo_Partido',     'A1:C2'),
+      fetchSheet('Ranking_data',        'A1:F20'),
+      fetchSheet('Stats_Desglose',      'A1:E20'),
+      fetchSheet('Stats_General',       'A1:C10'),
+      fetchSheet('Pronosticos_Proximo', 'A1:B20'),
+      fetchSheet('Dashboard_data',      'A1:E80'),
+    ]);
+
+    renderProximo(proxData);
+    renderRanking(rankData, statsDesData, pronData);
+    renderPronosticos(pronData);
+    renderStats(statsGenData);
+    renderPartidos(partData);
+
+    document.getElementById('update-time').textContent =
+      'Actualizado ' + new Date().toLocaleTimeString('es-CL', { hour: '2-digit', minute: '2-digit' });
+  } catch(e) {
+    console.error(e);
+    document.getElementById('update-time').textContent = 'Error al cargar — reintentando...';
+  }
+}
+
+cargarDatos();
+setInterval(cargarDatos, 2 * 60 * 1000);
+</script>
+</body>
+</html>
