@@ -76,7 +76,7 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;disp
 .live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block;margin-right:5px;animation:blink 2s infinite;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 
-.main{display:grid;grid-template-columns:1fr 1fr 300px;flex:1;overflow:hidden;}
+.main{display:grid;grid-template-columns:420px 1fr;flex:1;overflow:hidden;}
 .panel{padding:8px 12px;overflow-y:auto;border-right:1px solid var(--border);}
 .panel:last-child{border-right:none;}
 
@@ -94,12 +94,12 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;disp
 .podio-card.p1 .podio-pos{color:var(--gold);}
 .podio-card.p2 .podio-pos{color:var(--silver);}
 .podio-card.p3 .podio-pos{color:var(--bronze);}
-.podio-nombre{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;margin-bottom:1px;}
-.podio-pts{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;line-height:1;}
+.podio-nombre{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;margin-bottom:2px;}
+.podio-pts{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;line-height:1;}
 .podio-card.p1 .podio-pts{color:var(--gold);}
 .podio-card.p2 .podio-pts{color:var(--silver);}
 .podio-card.p3 .podio-pts{color:var(--bronze);}
-.podio-sub{font-size:9px;color:var(--muted);margin-top:1px;}
+.podio-sub{font-size:10px;color:var(--muted);margin-top:2px;}
 .podio-premio{display:inline-block;margin-top:3px;font-size:9px;font-weight:600;padding:1px 6px;border-radius:20px;letter-spacing:.04em;}
 .podio-card.p1 .podio-premio{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-brd);}
 .podio-card.p2 .podio-premio{background:var(--silver-bg);color:var(--silver);border:1px solid var(--silver-brd);}
@@ -110,16 +110,16 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;disp
 .podio-cambio.same{color:var(--muted);}
 
 /* PARTIDO EN VIVO */
-.match-card{border-radius:8px;padding:8px 12px;border:1px solid var(--border);background:var(--s1);margin-bottom:0;}
+.match-card{border-radius:6px;padding:6px 10px;border:1px solid var(--border);background:var(--s1);margin-bottom:0;}
 .match-card.en-vivo{border-color:rgba(255,68,68,0.4);background:var(--live-bg);}
 .match-card.proximo{border-color:var(--gold-brd);background:var(--gold-bg);}
 .match-tag{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px;display:flex;align-items:center;gap:4px;}
 .match-card.en-vivo .match-tag{color:var(--live);}
 .match-card.proximo .match-tag{color:var(--gold);}
 .live-pulse{width:8px;height:8px;border-radius:50%;background:var(--live);animation:blink .8s infinite;}
-.match-nombre{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;margin-bottom:4px;}
+.match-nombre{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;margin-bottom:3px;}
 .match-score-wrap{display:flex;align-items:center;justify-content:space-between;}
-.match-score{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;line-height:1;letter-spacing:.02em;}
+.match-score{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:900;line-height:1;letter-spacing:.02em;}
 .match-card.en-vivo .match-score{color:var(--live);}
 .match-card.proximo .match-score{color:var(--gold);font-size:22px;}
 .match-minuto{font-size:12px;color:var(--muted);text-align:right;}
@@ -127,9 +127,9 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;disp
 
 /* RANKING */
 .rank-table{width:100%;border-collapse:collapse;}
-.rank-table th{font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:0 5px 5px;text-align:left;border-bottom:1px solid var(--border);}
+.rank-table th{font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);padding:0 5px 5px;text-align:left;border-bottom:1px solid var(--border);}
 .rank-table th.r{text-align:right;}
-.rank-table td{padding:5px 5px;border-bottom:1px solid var(--border);vertical-align:middle;font-size:11px;}
+.rank-table td{padding:4px 5px;border-bottom:1px solid var(--border);vertical-align:middle;font-size:12px;}
 .rank-table td.r{text-align:right;}
 .rank-table tr:last-child td{border-bottom:none;}
 .rank-table tr:hover td{background:var(--s2);}
@@ -141,48 +141,50 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;disp
 .r2 .rk-pos{color:var(--silver);}
 .r3 .rk-pos{color:var(--bronze);}
 .rk-nombre{font-weight:500;}
-.rk-pts{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;}
+.rk-pts{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;}
 .r1 .rk-pts{color:var(--gold);}
-.rk-bar-wrap{width:36px;height:3px;background:var(--s3);border-radius:2px;display:inline-block;vertical-align:middle;margin-left:4px;}
+.rk-bar-wrap{width:28px;height:3px;background:var(--s3);border-radius:2px;display:inline-block;vertical-align:middle;margin-left:3px;}
 .rk-bar{height:4px;border-radius:2px;background:var(--muted);}
 .r1 .rk-bar{background:var(--gold);}
 .r2 .rk-bar{background:var(--silver);}
 .r3 .rk-bar{background:var(--bronze);}
-.badge{display:inline-block;font-size:10px;font-weight:600;padding:1px 5px;border-radius:20px;min-width:20px;text-align:center;}
+.badge{display:inline-block;font-size:11px;font-weight:600;padding:2px 6px;border-radius:20px;min-width:22px;text-align:center;}
 .bg{background:var(--green-bg);color:var(--green);}
 .bb{background:var(--blue-bg);color:var(--blue);}
 .cambio-cell{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-align:right;}
 .cambio-cell.up{color:var(--green);}
 .cambio-cell.down{color:var(--red);}
 .cambio-cell.same{color:var(--muted);}
-.pill{font-size:10px;font-weight:600;background:var(--s2);border:1px solid var(--border2);border-radius:20px;padding:1px 5px;white-space:nowrap;}
+.pill{font-size:11px;font-weight:600;background:var(--s2);border:1px solid var(--border2);border-radius:20px;padding:2px 7px;white-space:nowrap;}
 
-.pron-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--border);font-size:11px;}
+.pron-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;}
 .pron-row:last-child{border-bottom:none;}
-.pron-score{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:13px;color:var(--gold);}
+.pron-score{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:15px;color:var(--gold);}
 
-.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;}
-.stat-card{background:var(--s1);border:1px solid var(--border);border-radius:6px;padding:5px 8px;}
-.stat-lbl{font-size:9px;color:var(--muted);margin-bottom:1px;}
-.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;line-height:1.1;}
-.stat-det{font-size:9px;color:var(--muted);margin-top:1px;}
+.stat-grid{display:flex;flex-direction:column;gap:3px;}
+.stat-card{background:var(--s1);border:1px solid var(--border);border-radius:6px;padding:4px 8px;display:flex;align-items:baseline;gap:6px;}
+.stat-lbl{font-size:10px;color:var(--muted);white-space:nowrap;flex-shrink:0;}
+.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;}
+.stat-det{font-size:9px;color:var(--muted);margin-left:2px;}
 
-.part-row{display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid var(--border);font-size:11px;}
+.part-row{display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;}
 .part-row:last-child{border-bottom:none;}
-.part-fecha{font-size:9px;color:var(--muted);min-width:52px;}
+.part-fecha{font-size:10px;color:var(--muted);min-width:58px;}
 .part-nombre{flex:1;font-weight:500;}
-.part-score{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:12px;}
+.part-score{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:14px;}
 .part-score.played{color:var(--gold);}
 .part-score.live{color:var(--live);animation:blink 1.5s infinite;}
 .part-score.pending{color:var(--muted);font-size:11px;font-weight:400;}
 
 .divider{height:1px;background:var(--border);margin:6px 0;}
 .loading{color:var(--muted);font-size:12px;padding:12px 0;text-align:center;}
-.grupo-label{font-family:"Barlow Condensed",sans-serif;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);padding:4px 0 2px;border-bottom:1px solid var(--gold-brd);margin-bottom:1px;}
-.grupo-table{width:100%;border-collapse:collapse;margin-bottom:5px;font-size:9px;}
-.grupo-table th{font-size:8px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);padding:2px 3px;text-align:right;border-bottom:1px solid var(--border);}
+.grupos-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:7px;}
+.grupo-card{background:var(--s1);border:1px solid var(--border);border-radius:6px;padding:5px 6px;}
+.grupo-label{font-family:"Barlow Condensed",sans-serif;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);padding:0 0 3px;border-bottom:1px solid var(--gold-brd);margin-bottom:3px;}
+.grupo-table{width:100%;border-collapse:collapse;font-size:9px;}
+.grupo-table th{font-size:8px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;color:var(--muted);padding:1px 2px;text-align:right;border-bottom:1px solid var(--border);}
 .grupo-table th.l{text-align:left;}
-.grupo-table td{padding:2px 3px;border-bottom:1px solid var(--border);text-align:right;color:var(--muted2);}
+.grupo-table td{padding:2px 2px;border-bottom:1px solid var(--border);text-align:right;color:var(--muted2);}
 .grupo-table td.l{text-align:left;font-weight:500;color:var(--text);}
 .grupo-table tr:last-child td{border-bottom:none;}
 .grupo-table tr:nth-child(1) td,.grupo-table tr:nth-child(2) td{color:var(--text);}
@@ -422,29 +424,32 @@ function renderGrupos(data) {
     grupos[g].push(r);
   });
 
-  // Si no hay datos de grupos aún, mostrar estructura vacía
   if(Object.keys(grupos).length === 0) {
     el.innerHTML='<div class="loading">Esperando resultados...</div>';
     return;
   }
 
-  el.innerHTML = Object.keys(grupos).sort().map(g=>{
+  // Grilla 3 columnas — cada grupo es una tarjeta compacta
+  const tarjetas = Object.keys(grupos).sort().map(g=>{
     const equipos = grupos[g];
-    return `<div class="grupo-label">${g}</div>
-    <table class="grupo-table">
-      <thead><tr>
-        <th class="l">Equipo</th>
-        <th>PJ</th><th>PG</th><th>PE</th><th>PP</th>
-        <th>GF</th><th>GC</th><th>DIF</th><th class="pts">PTS</th>
-      </tr></thead>
-      <tbody>${equipos.map((r,i)=>`<tr style="${i<2?'background:rgba(61,220,132,0.05)':''}">
-        <td class="l">${r[1]}</td>
-        <td>${r[2]||0}</td><td>${r[3]||0}</td><td>${r[4]||0}</td><td>${r[5]||0}</td>
-        <td>${r[6]||0}</td><td>${r[7]||0}</td><td>${r[8]||0}</td>
-        <td class="pts" style="${i<2?'color:var(--green);font-weight:700':''}">${r[9]||0}</td>
-      </tr>`).join('')}</tbody>
-    </table>`;
-  }).join('');
+    return `<div class="grupo-card">
+      <div class="grupo-label">${g}</div>
+      <table class="grupo-table">
+        <thead><tr>
+          <th class="l">Equipo</th>
+          <th>PJ</th><th>DIF</th><th class="pts">PTS</th>
+        </tr></thead>
+        <tbody>${equipos.map((r,i)=>`<tr>
+          <td class="l">${r[1]}</td>
+          <td>${r[2]||0}</td>
+          <td>${r[8]||0}</td>
+          <td class="pts" style="${i<2?'color:var(--green);font-weight:700':''}">${r[9]||0}</td>
+        </tr>`).join('')}</tbody>
+      </table>
+    </div>`;
+  });
+
+  el.innerHTML = `<div class="grupos-grid">${tarjetas.join('')}</div>`;
 }
 
 async function cargarDatos() {
@@ -462,8 +467,8 @@ async function cargarDatos() {
     renderPodio(rankData, statsDesData);
     renderMatchCard(vivoData);
     renderRanking(rankData, statsDesData, pronData);
-    renderStats(statsGenData);
     renderPartidos(partData, vivoData);
+    renderStats(statsGenData);
     renderGrupos(gruposData);
 
     document.getElementById('update-time').textContent =
