@@ -395,7 +395,7 @@ function renderPartidos(data, vivoData) {
   // Partidos en vivo primero, luego jugados del más reciente al más antiguo
   const jugados=rows.filter(r=>r[3]!==undefined&&r[3]!==''&&r[3]!==null&&String(r[3])!=='null');
   const liveRows=rows.filter(r=>enVivo.some(n=>n===r[1]));
-  const playedRows=jugados.filter(r=>!enVivo.some(n=>n===r[1])).reverse().slice(0,8);
+  const playedRows=jugados.filter(r=>!enVivo.some(n=>n===r[1])).reverse().slice(0,4);
 
   el.innerHTML=[...liveRows,...playedRows].map(r=>{
     const played=r[3]!==undefined&&r[3]!==''&&r[3]!==null&&String(r[3])!=='null';
@@ -422,6 +422,12 @@ function renderGrupos(data) {
     grupos[g].push(r);
   });
 
+  // Si no hay datos de grupos aún, mostrar estructura vacía
+  if(Object.keys(grupos).length === 0) {
+    el.innerHTML='<div class="loading">Esperando resultados...</div>';
+    return;
+  }
+
   el.innerHTML = Object.keys(grupos).sort().map(g=>{
     const equipos = grupos[g];
     return `<div class="grupo-label">${g}</div>
@@ -431,11 +437,11 @@ function renderGrupos(data) {
         <th>PJ</th><th>PG</th><th>PE</th><th>PP</th>
         <th>GF</th><th>GC</th><th>DIF</th><th class="pts">PTS</th>
       </tr></thead>
-      <tbody>${equipos.map(r=>`<tr>
+      <tbody>${equipos.map((r,i)=>`<tr style="${i<2?'background:rgba(61,220,132,0.05)':''}">
         <td class="l">${r[1]}</td>
         <td>${r[2]||0}</td><td>${r[3]||0}</td><td>${r[4]||0}</td><td>${r[5]||0}</td>
         <td>${r[6]||0}</td><td>${r[7]||0}</td><td>${r[8]||0}</td>
-        <td class="pts">${r[9]||0}</td>
+        <td class="pts" style="${i<2?'color:var(--green);font-weight:700':''}">${r[9]||0}</td>
       </tr>`).join('')}</tbody>
     </table>`;
   }).join('');
