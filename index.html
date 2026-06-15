@@ -178,6 +178,15 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;disp
 
 .divider{height:1px;background:var(--border);margin:14px 0;}
 .loading{color:var(--muted);font-size:12px;padding:12px 0;text-align:center;}
+.grupo-label{font-family:"Barlow Condensed",sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);padding:8px 0 4px;border-bottom:1px solid var(--gold-brd);margin-bottom:2px;}
+.grupo-table{width:100%;border-collapse:collapse;margin-bottom:10px;font-size:11px;}
+.grupo-table th{font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:3px 5px;text-align:right;border-bottom:1px solid var(--border);}
+.grupo-table th.l{text-align:left;}
+.grupo-table td{padding:5px 5px;border-bottom:1px solid var(--border);text-align:right;color:var(--muted2);}
+.grupo-table td.l{text-align:left;font-weight:500;color:var(--text);}
+.grupo-table tr:last-child td{border-bottom:none;}
+.grupo-table tr:nth-child(1) td,.grupo-table tr:nth-child(2) td{color:var(--text);}
+.grupo-table tr:nth-child(1) td.pts,.grupo-table tr:nth-child(2) td.pts{color:var(--green);font-weight:700;}
 ::-webkit-scrollbar{width:3px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:3px;}
@@ -229,6 +238,10 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;disp
   <div class="panel">
     <div class="lbl">Últimos resultados</div>
     <div id="partidos-list"><div class="loading">Cargando...</div></div>
+
+    <div class="divider"></div>
+    <div class="lbl">Tabla de grupos</div>
+    <div id="grupos-list"><div class="loading">Cargando...</div></div>
   </div>
 
   <div class="panel">
@@ -397,15 +410,47 @@ function renderPartidos(data, vivoData) {
   }).join('');
 }
 
+function renderGrupos(data) {
+  const el = document.getElementById('grupos-list');
+  if(!data||data.length<2){el.innerHTML='<div class="loading">Sin datos</div>';return;}
+
+  const rows = data.slice(1).filter(r=>r[0]&&r[1]);
+  const grupos = {};
+  rows.forEach(r=>{
+    const g = r[0];
+    if(!grupos[g]) grupos[g]=[];
+    grupos[g].push(r);
+  });
+
+  el.innerHTML = Object.keys(grupos).sort().map(g=>{
+    const equipos = grupos[g];
+    return `<div class="grupo-label">${g}</div>
+    <table class="grupo-table">
+      <thead><tr>
+        <th class="l">Equipo</th>
+        <th>PJ</th><th>PG</th><th>PE</th><th>PP</th>
+        <th>GF</th><th>GC</th><th>DIF</th><th class="pts">PTS</th>
+      </tr></thead>
+      <tbody>${equipos.map(r=>`<tr>
+        <td class="l">${r[1]}</td>
+        <td>${r[2]||0}</td><td>${r[3]||0}</td><td>${r[4]||0}</td><td>${r[5]||0}</td>
+        <td>${r[6]||0}</td><td>${r[7]||0}</td><td>${r[8]||0}</td>
+        <td class="pts">${r[9]||0}</td>
+      </tr>`).join('')}</tbody>
+    </table>`;
+  }).join('');
+}
+
 async function cargarDatos() {
   try {
-    const [rankData,statsDesData,statsGenData,pronData,partData,vivoData] = await Promise.all([
+    const [rankData,statsDesData,statsGenData,pronData,partData,vivoData,gruposData] = await Promise.all([
       get('Ranking_data',       'A1:F20'),
       get('Stats_Desglose',     'A1:E20'),
       get('Stats_General',      'A1:C10'),
       get('Pronosticos_Proximo','A1:B20'),
       get('Dashboard_data',     'A1:E80'),
       get('Partido_EnVivo',     'A1:F10'),
+      get('Grupos',             'A1:J200'),
     ]);
 
     renderPodio(rankData, statsDesData);
@@ -413,6 +458,7 @@ async function cargarDatos() {
     renderRanking(rankData, statsDesData, pronData);
     renderStats(statsGenData);
     renderPartidos(partData, vivoData);
+    renderGrupos(gruposData);
 
     document.getElementById('update-time').textContent =
       'Actualizado ' + new Date().toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'});
