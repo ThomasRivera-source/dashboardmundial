@@ -77,7 +77,7 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;disp
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 
 .main{display:grid;grid-template-columns:420px 1fr;flex:1;overflow:hidden;}
-.panel{padding:8px 12px;overflow-y:auto;border-right:1px solid var(--border);}
+.panel{padding:8px 12px;overflow:hidden;border-right:1px solid var(--border);display:flex;flex-direction:column;}
 .panel:last-child{border-right:none;}
 
 .lbl{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
@@ -178,10 +178,10 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;disp
 
 .divider{height:1px;background:var(--border);margin:6px 0;}
 .loading{color:var(--muted);font-size:12px;padding:12px 0;text-align:center;}
-.grupos-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
-.grupo-card{background:var(--s1);border:1px solid var(--border);border-radius:6px;padding:5px 6px;}
+.grupos-grid{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:repeat(4,1fr);gap:6px;height:100%;}
+.grupo-card{background:var(--s1);border:1px solid var(--border);border-radius:6px;padding:5px 6px;display:flex;flex-direction:column;overflow:hidden;}
 .grupo-label{font-family:"Barlow Condensed",sans-serif;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);padding:0 0 3px;border-bottom:1px solid var(--gold-brd);margin-bottom:3px;}
-.grupo-table{width:100%;border-collapse:collapse;font-size:9px;}
+.grupo-table{width:100%;border-collapse:collapse;font-size:10px;flex:1;}
 .grupo-table th{font-size:8px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;color:var(--muted);padding:1px 2px;text-align:right;border-bottom:1px solid var(--border);}
 .grupo-table th.l{text-align:left;}
 .grupo-table td{padding:2px 2px;border-bottom:1px solid var(--border);text-align:right;color:var(--muted2);}
@@ -219,9 +219,9 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;disp
   <div class="panel">
     <div class="lbl" style="margin-bottom:10px;">Partido actual</div>
     <div id="match-card"><div class="loading">Cargando...</div></div>
-    <div class="divider"></div>
-    <div class="lbl">Ranking completo</div>
-    <table class="rank-table">
+    <div class="divider" style="flex-shrink:0;"></div>
+    <div class="lbl" style="flex-shrink:0;">Ranking completo</div>
+    <table class="rank-table" style="flex-shrink:0;">
       <thead>
         <tr>
           <th style="width:22px"></th>
@@ -249,9 +249,9 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;disp
   <div class="panel">
     
     
-    <div class="divider"></div>
-    <div class="lbl">Estadísticas</div>
-    <div class="stat-grid" id="stats-grid"><div class="loading" style="grid-column:1/-1">Cargando...</div></div>
+    <div class="divider" style="flex-shrink:0;"></div>
+    <div class="lbl" style="flex-shrink:0;">Estadísticas</div>
+    <div class="stat-grid" id="stats-grid" style="flex-shrink:0;"><div class="loading" style="grid-column:1/-1">Cargando...</div></div>
   </div>
 
 </div>
