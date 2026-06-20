@@ -80,6 +80,16 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;disp
 .panel{padding:8px 12px;overflow:hidden;border-right:1px solid var(--border);display:flex;flex-direction:column;height:100%;box-sizing:border-box;}
 .panel:last-child{border-right:none;}
 
+@media (max-width:768px){
+  html,body{height:auto;overflow:visible;}
+  body{display:block;}
+  .main{display:block;overflow:visible;min-height:auto;}
+  .panel{overflow:visible;border-right:none;border-bottom:1px solid var(--border);height:auto;}
+  #ranking-list{max-height:60vh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+  #grupos-list{overflow:visible;}
+  .grupos-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:none;height:auto;}
+}
+
 .lbl{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
 
 /* PODIO */
@@ -221,6 +231,7 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;disp
     <div id="match-card"><div class="loading">Cargando...</div></div>
     <div class="divider" style="flex-shrink:0;"></div>
     <div class="lbl" style="flex-shrink:0;">Ranking completo</div>
+    <div id="ranking-list" style="flex:1;overflow-y:auto;min-height:0;">
     <table class="rank-table" style="flex-shrink:0;">
       <thead>
         <tr>
@@ -235,6 +246,7 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;disp
       </thead>
       <tbody id="ranking-body"><tr><td colspan="7" class="loading">Cargando...</td></tr></tbody>
     </table>
+    </div>
   </div>
 
   <div class="panel">
